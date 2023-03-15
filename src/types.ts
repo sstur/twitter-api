@@ -6,10 +6,10 @@ export type User = {
   bio: string;
   following: Array<string>;
   followers: Array<string>;
-  likedChirps: Array<string>;
+  likedTweets: Array<string>;
 };
 
-export type Chirp = {
+export type Tweet = {
   id: string;
   content: string;
   author: string;

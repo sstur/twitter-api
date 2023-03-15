@@ -3,17 +3,17 @@ import type { Application } from 'express';
 import { db } from '../db';
 
 export default (app: Application) => {
-  app.get('/api/chirps', async (request, response, next) => {
+  app.get('/api/tweets', async (request, response, next) => {
     try {
-      const chirps = await db.Chirp.getAll();
-      chirps.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-      response.json(chirps);
+      const tweets = await db.Tweet.getAll();
+      tweets.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+      response.json(tweets);
     } catch (error) {
       next(error);
     }
   });
 
-  app.post('/api/chirps', async (request, response, next) => {
+  app.post('/api/tweets', async (request, response, next) => {
     try {
       const body: undefined | Record<string, unknown> = request.body;
       const userId = String(body?.userId);
@@ -24,13 +24,13 @@ export default (app: Application) => {
         return;
       }
       const now = new Date().toISOString();
-      const newChirp = await db.Chirp.insert({
+      const newTweet = await db.Tweet.insert({
         content,
         author: userId,
         likedBy: [],
         createdAt: now,
       });
-      response.json(newChirp);
+      response.json(newTweet);
     } catch (error) {
       next(error);
     }

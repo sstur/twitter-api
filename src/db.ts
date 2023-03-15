@@ -1,7 +1,7 @@
 import { fromSchema, Model } from './support/orm';
-import { User, Chirp } from './types';
+import { User, Tweet } from './types';
 
 export const db = fromSchema({
   User: Model<User>(),
-  Chirp: Model<Chirp>(),
+  Tweet: Model<Tweet>(),
 });

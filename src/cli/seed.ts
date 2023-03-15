@@ -9,7 +9,7 @@ const users = [
     bio: 'Comedian from South Africa. I was in the crowd when Rafiki held Simba over the edge of the cliff, like an African Michael Jackson.',
     following: [],
     followers: [],
-    likedChirps: [],
+    likedTweets: [],
   },
   {
     username: 'taylorswift',
@@ -19,7 +19,7 @@ const users = [
     bio: "I'm the problem, it's me",
     following: [],
     followers: [],
-    likedChirps: [],
+    likedTweets: [],
   },
   {
     username: 'brendaneich',
@@ -29,7 +29,7 @@ const users = [
     bio: `Co-founder & CEO @Brave Software. Co-founded Mozilla & Firefox. Created JavaScript.`,
     following: [],
     followers: [],
-    likedChirps: [],
+    likedTweets: [],
   },
   {
     username: 'sstur',
@@ -39,7 +39,7 @@ const users = [
     bio: 'Software engineer, founder, speaker, trainer. SF Bay Area.',
     following: [],
     followers: [],
-    likedChirps: [],
+    likedTweets: [],
   },
   {
     username: 'thomas',
@@ -48,7 +48,7 @@ const users = [
     bio: '',
     following: [],
     followers: [],
-    likedChirps: [],
+    likedTweets: [],
   },
   {
     username: 'olivia',
@@ -57,11 +57,11 @@ const users = [
     bio: '',
     following: [],
     followers: [],
-    likedChirps: [],
+    likedTweets: [],
   },
 ];
 
-const chirps = [
+const tweets = [
   {
     content:
       'The Lavender Haze video is out now. There is lots of lavender. There is lots of haze.',
@@ -103,11 +103,11 @@ async function seed() {
     userByUsername.set(user.username, created.id);
     console.log(`Created user: ${user.username}`);
   }
-  for (const chirp of chirps) {
+  for (const tweet of tweets) {
     // Update the author to contain the acutal user ID
-    chirp.author = userByUsername.get(chirp.author) ?? '';
-    const created = await db.Chirp.insert(chirp);
-    console.log(`Created chirp: ${created.id}`);
+    tweet.author = userByUsername.get(tweet.author) ?? '';
+    const created = await db.Tweet.insert(tweet);
+    console.log(`Created tweet: ${created.id}`);
   }
   console.log('Done.');
 }
