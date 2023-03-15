@@ -8,7 +8,7 @@
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "jest": "jest --passWithNoTests",
-    "test": "npm run typecheck && npm run jest"
+    "test": "npm run typecheck && npm run format:check && npm run jest"
   },
   "dependencies": {
     "express": "^4.18.1",
