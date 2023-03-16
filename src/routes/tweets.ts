@@ -6,9 +6,15 @@ import { authenticate } from './helpers/auth';
 export default (app: Application) => {
   app.get('/api/tweets', async (request, response, next) => {
     try {
+      const user = await authenticate(request.header('authorization') ?? '');
       const tweets = await db.Tweet.getAll();
       tweets.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-      response.json(tweets);
+      response.json(
+        tweets.map((tweet) => ({
+          ...tweet,
+          isLikedByViewer: user ? tweet.likedBy.includes(user.id) : false,
+        })),
+      );
     } catch (error) {
       next(error);
     }
