@@ -1,9 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import { attachHandlers } from './server';
 
 const PORT = 3000;
 
 const app = express();
+app.use(cors());
 
 attachHandlers(app);
 
