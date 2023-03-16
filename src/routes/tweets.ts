@@ -1,6 +1,7 @@
 import type { Application } from 'express';
 
 import { db } from '../db';
+import { authenticate } from './helpers/auth';
 
 export default (app: Application) => {
   app.get('/api/tweets', async (request, response, next) => {
@@ -15,18 +16,17 @@ export default (app: Application) => {
 
   app.post('/api/tweets', async (request, response, next) => {
     try {
-      const body: undefined | Record<string, unknown> = request.body;
-      const userId = String(body?.userId);
-      const content = String(body?.content);
-      const user = await db.User.getById(userId);
+      const user = await authenticate(request.header('authorization') ?? '');
       if (!user) {
-        response.status(400).json({ success: false, error: 'Bad userId' });
+        response.status(401).json({ success: false, error: 'Unauthorized' });
         return;
       }
+      const body: Record<string, unknown> = request.body ?? {};
+      const content = String(body.content);
       const now = new Date().toISOString();
       const newTweet = await db.Tweet.insert({
         content,
-        author: userId,
+        author: user.id,
         likedBy: [],
         createdAt: now,
       });

@@ -13,8 +13,12 @@ export default (app: Application) => {
       );
       const user = users[0];
       if (user && password === 'asdf') {
-        // Hacky: We're using the user ID as a session token
-        response.json({ success: true, token: user.id });
+        const now = new Date().toISOString();
+        const session = await db.Session.insert({
+          user: user.id,
+          createdAt: now,
+        });
+        response.json({ success: true, token: session.id });
       } else {
         response.status(401).json({ success: false });
       }

@@ -16,3 +16,9 @@ export type Tweet = {
   likedBy: Array<string>;
   createdAt: string;
 };
+
+export type Session = {
+  id: string;
+  user: string;
+  createdAt: string;
+};
